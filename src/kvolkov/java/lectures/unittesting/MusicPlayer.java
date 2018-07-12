@@ -9,9 +9,12 @@ public class MusicPlayer {
 	private Playlist mPlaylist = null;
 	private PlayerState mState = PlayerState.UNKNOWN;
 
-	public void createPlaylistFromDirectory() {
+	public void openDirectory() {
 		if (mState != PlayerState.UNKNOWN) {
-			// TODO: stop and cleanup
+			stopIfWasPlaying();
+			if (mPlaylist != null) {
+				mPlaylist.cleanup();
+			}
 		}
 
 		mPlaylist = new Playlist();
@@ -23,44 +26,72 @@ public class MusicPlayer {
 	}
 	
 	public void play() {
-		mState = PlayerState.PLAYING;
+		if (mState == PlayerState.PLAYING) {
+			return;
+		}
+
 		startPlayback();
+		mState = PlayerState.PLAYING;
 	}
 	
 	public void pause() {
-		mState = PlayerState.PAUSED;
+		if (mState == PlayerState.PAUSED) {
+			return;
+		}
+
 		pausePlayback();
+		mState = PlayerState.PAUSED;
 	}
 	
 	public void stop() {
-		mState = PlayerState.STOPPED;
+		if (mState == PlayerState.STOPPED) {
+			return;
+		}
+
 		stopPlayback();
+		mState = PlayerState.STOPPED;
 	}
 	
 	public void next() {
-		if (mState == PlayerState.PLAYING) {
-			stop();
-		}
+		boolean continuePlayback = stopIfWasPlaying();
+		
 		mPlaylist.nextTrack();
+
+		if (continuePlayback) {
+			play();
+		}
 	}
 	
 	public void previous() {
+		boolean continuePlayback = stopIfWasPlaying();
+
+		mPlaylist.previousTrack();
+
+		if (continuePlayback) {
+			play();
+		}
+	}
+	
+	private boolean stopIfWasPlaying() {
 		if (mState == PlayerState.PLAYING) {
 			stop();
+
+			return true;
 		}
-		mPlaylist.previousTrack();
+
+		return false;
 	}
 	
 	private void startPlayback() {
-		// TODO: implement
+		System.out.println("Play file " + mPlaylist.getCurrentTrack().toString());
 	}
 
 	private void pausePlayback() {
-		// TODO: implement
+		System.out.println("Pause file " + mPlaylist.getCurrentTrack().toString());
 	}
 	
 	private void stopPlayback() {
-		// TODO: implement
+		System.out.println("Stop file " + mPlaylist.getCurrentTrack().toString());
 	}
 
 }

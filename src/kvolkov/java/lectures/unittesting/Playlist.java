@@ -36,5 +36,12 @@ public class Playlist {
 
 		return mCurrentTrack;
 	}
+	
+	public void cleanup() {
+		for (MusicFile musicFile : mFilesList) {
+			musicFile.cleanup();
+		}
+		mFilesList.clear();
+	}
 
 }

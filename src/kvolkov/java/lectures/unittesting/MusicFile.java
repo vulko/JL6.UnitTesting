@@ -5,10 +5,10 @@ import java.io.File;
 public class MusicFile {
 	
 	enum FileType {
-		unsupported,
-		mp3,
-		wav,
-		aac
+		UNSUPPORTED,
+		MP3,
+		WAV,
+		AAC
 	};
 	
 	private String mName;
@@ -21,15 +21,36 @@ public class MusicFile {
 			throw new Exception("No file exists with a given path: " + path);
 		} else {
 			mName = mFile.getName();
+			verify();
 		}
 	}
 
-	public void verify() {
-		// TODO: check filetype if supported
+	public void cleanup() {
+		// TODO: cleanup
 	}
 
-	public void close() {
-		// TODO: cleanup
+	@Override
+	public String toString() {
+		return mName + " of type: " + mFileType.toString();
+	}
+	
+	private void verify() {
+		// check extension
+		String extension = "";
+		int pos = mName.lastIndexOf('.');
+		if (pos > 0) {
+		    extension = mName.substring(pos + 1);
+		}
+		
+		if (extension.toLowerCase().equals("mp3")) {
+			mFileType = FileType.MP3;
+		} else if (extension.toLowerCase().equals("wav")) {
+			mFileType = FileType.WAV;
+		} else if (extension.toLowerCase().equals("aac")) {
+			mFileType = FileType.AAC;
+		} else {
+			mFileType = FileType.UNSUPPORTED;
+		}
 	}
 
 }
