@@ -4,14 +4,14 @@ import java.io.File;
 
 public class MusicFile {
 	
-	enum FileType {
+	public enum FileType {
 		UNSUPPORTED,
 		MP3,
 		WAV,
 		AAC
 	};
 	
-	private String mName;
+	protected String mName;
 	private FileType mFileType;
 	private File mFile;
 
@@ -28,13 +28,21 @@ public class MusicFile {
 	public void cleanup() {
 		// TODO: cleanup
 	}
+	
+	public FileType getType() {
+		return mFileType;
+	}
+
+	public String getName() {
+		return mName;
+	}
 
 	@Override
 	public String toString() {
 		return mName + " of type: " + mFileType.toString();
 	}
 	
-	private void verify() {
+	protected void verify() {
 		// check extension
 		String extension = "";
 		int pos = mName.lastIndexOf('.');

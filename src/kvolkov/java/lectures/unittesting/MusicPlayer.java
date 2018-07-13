@@ -2,11 +2,11 @@ package kvolkov.java.lectures.unittesting;
 
 public class MusicPlayer {
 	
-	enum PlayerState {
+	public enum PlayerState {
 		UNKNOWN, STOPPED, PLAYING, PAUSED
 	}
 	
-	private Playlist mPlaylist = null;
+	protected Playlist mPlaylist = null;
 	private PlayerState mState = PlayerState.UNKNOWN;
 
 	public void openDirectory() {
@@ -23,6 +23,10 @@ public class MusicPlayer {
 		} catch (Exception e) {
 			// TODO: handle
 		}
+	}
+	
+	public PlayerState getCurrentState() {
+		return mState;
 	}
 	
 	public void play() {

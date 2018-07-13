@@ -26,15 +26,23 @@ public class Playlist {
 	}
 	
 	public MusicFile nextTrack() {
-		mCurrentTrack = mCurrentTrackIterator.next();
-		
-		return mCurrentTrack;
+		if (mCurrentTrackIterator.hasNext()) {
+			mCurrentTrack = mCurrentTrackIterator.next();
+
+			return mCurrentTrack;
+		} else {
+			return null;
+		}
 	}
 	
 	public MusicFile previousTrack() {
-		mCurrentTrack = mCurrentTrackIterator.previous();
+		if (mCurrentTrackIterator.hasPrevious()) {
+			mCurrentTrack = mCurrentTrackIterator.previous();
 
-		return mCurrentTrack;
+			return mCurrentTrack;
+		} else {
+			return null;
+		}
 	}
 	
 	public void cleanup() {
